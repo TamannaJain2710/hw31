@@ -16,8 +16,9 @@ function setup(){
     engine = Engine.create();
     world = engine.world;
     drops = new drop(random(50,400),random(50,400));
-    person = createSprite(200,30,2,5);
-    person.addAnimation(pImg);
+    person = createSprite(200,500,5,10);
+    person.addAnimation("per",pImg);
+    person.scale="0.25"
 }
 
 function draw(){
