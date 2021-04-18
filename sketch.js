@@ -25,7 +25,7 @@ function draw(){
         createdrops.push(new drop(random(50,400),random(50,400)))
     }
     if ((drops.body.position.y > drops.body.height) && (frameCount % 2 == 0) ){
-        Matter.Body.setPosition(drops.body, {x:random(0,400), y:random(0,400)})
+        Matter.Body.setPosition(drops.body, {x:random(50,400), y:random(50,400)})
     }
     
 }   
