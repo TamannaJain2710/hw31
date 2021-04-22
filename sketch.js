@@ -6,9 +6,14 @@ var drops;
 var maxDrops = 100;
 var createdrops= [];
 var person,pImg;
+var thunder, tImg,tImg2,tImg3,tImg4,rand,TFC;
 
 function preload(){
-     pImg = loadAnimation("walking_1.png","walking_2.png","walking_3.png","walking_4.png","walking_5.png","walking_6.png","walking_7.png","walking_8.png")
+     //pImg = loadAnimation("walking_1.png","walking_2.png","walking_3.png","walking_4.png","walking_5.png","walking_6.png","walking_7.png","walking_8.png")
+    tImg = loadImage("1.png");
+    tImg2 = loadImage("2.png");
+    tImg3 = loadImage("3.png");
+    tImg4 = loadImage("4.png");
 }
 
 function setup(){
@@ -16,27 +21,47 @@ function setup(){
     engine = Engine.create();
     world = engine.world;
     drops = new drop(random(50,300),random(50,500));
-    person = createSprite(200,500,5,10);
-    person.addAnimation("per",pImg);
-    person.scale="0.25"
+    rand = Math.round(random(1,4));
+    if(frameCount%80===0){
+    TFC = frameCount
+    thunder = createSprite(random(20,380),random(20,80),10,10);
+    switch (rand) {
+        case 1:  thunder.addImage(tImg)
+        break;
+        case 2:  thunder.addImage(tImg2)
+        break;
+        case 3:  thunder.addImage(tImg3)
+        break;
+        case 4:  thunder.addImage(tImg4)
+        break;
+        default:
+            break;
+    }
+    thunder.scale = random(0.3,0.6)
+}
+    if(TFC%10 === 0){
+        thunder = null;
+    }
+    person = new umbrella(200,500);
+    person.scale= 0.25
+    if(frameCount % 250 === 0){
+
+        for(var i=0; i<maxDrops; i++){
+            createdrops.push(new drop(random(0,400), random(0,400)));
+        }
+
+    }
 }
 
 function draw(){
     background("black")
     Engine.update(engine);
-    
-    /*for (var i =0; i<maxDrops; i++){
-        createdrops.push(new drop(random(50,400),random(50,400)))
-    }
-    if ((drops.body.position.y > drops.body.height) && (frameCount % 2 == 0) ){
-        Matter.Body.setPosition(drops.body, {x:random(50,400), y:random(50,400)})
-    }*/
-    for (var i =0; i<maxDrops; i++){ 
-        createdrops.push(new drop(random(50,300),random(50,500)))
-    } 
-    if ((drops.body.position.y > drops.body.height) && (frameCount % 10 == 0) ){ 
-        Matter.Body.setPosition(drops.body, {x:random(50,300), y:random(50,500)}) }
-        drops.display();
+        person.display()
+        for(var i = 0; i<maxDrops; i++){
+            createdrops[i].display();
+            createdrops[i].updateY()
+            
+        }
     drawSprites()
 }   
 
